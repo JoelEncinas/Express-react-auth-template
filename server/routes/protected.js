@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/protected", authMiddleware, (req, res) => {
   try {
-    res.status(200).json({ message: req.user });
+    res.status(200).json({ user: req.user.username });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
