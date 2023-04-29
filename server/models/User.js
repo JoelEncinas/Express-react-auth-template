@@ -12,4 +12,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("DVUser", userSchema);
+// change to user on project finish
+module.exports = mongoose.model("User", userSchema);

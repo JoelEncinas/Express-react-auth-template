@@ -16,6 +16,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+// routes
+const authRoutes = require("./routes/auth");
+
+app.use("/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.status(404).json({ message: "hello world" });
 });
