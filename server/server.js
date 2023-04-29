@@ -23,7 +23,6 @@ const protectedRoutes = require("./routes/protected");
 app.use("/auth", authRoutes);
 app.use("/protected", protectedRoutes);
 
-
 app.get("/", (req, res) => {
   res.status(404).json({ message: "hello world" });
 });
