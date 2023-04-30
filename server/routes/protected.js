@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/", authMiddleware, (req, res) => {
   try {
-    res.status(200).json({ user: req.user.username, isLoggedIn: true });
+    console.log(req.user);
+    res.status(200).json({ username: req.username, isLoggedIn: true });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }

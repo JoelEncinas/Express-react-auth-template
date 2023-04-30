@@ -50,7 +50,6 @@ function Login() {
     for (const cookie of cookies) {
       const [name, value] = cookie.split("=");
       if (name === "token") {
-        // do login logic
         fetch("http://127.0.0.1:4997/protected", {
           headers: {
             "x-access-token": value,
