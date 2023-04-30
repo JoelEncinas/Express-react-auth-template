@@ -61,7 +61,7 @@ function Login() {
         break;
       }
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
