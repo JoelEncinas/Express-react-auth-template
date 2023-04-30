@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
 
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
-    
+
     res.status(201).json({ message: "User created" });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
         expiresIn: "24h",
       });
       return res

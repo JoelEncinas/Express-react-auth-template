@@ -41,7 +41,7 @@ function Protected() {
   return (
     <div>
       <h1>Protected route</h1>
-      <p>{username}</p>
+      {username && <p>Hello {username}</p>}
     </div>
   );
 }
