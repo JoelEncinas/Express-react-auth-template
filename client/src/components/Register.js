@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -37,6 +37,23 @@ function Register() {
         console.log(error);
       });
   }
+
+  useEffect(() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [name, value] = cookie.split("=");
+      if (name === "token") {
+        fetch("http://127.0.0.1:4997/protected", {
+          headers: {
+            "x-access-token": value,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => (data.isLoggedIn ? navigate("/protected") : null));
+        break;
+      }
+    }
+  }, []);
 
   return (
     <div>
