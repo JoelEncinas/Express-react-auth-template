@@ -4,8 +4,9 @@ function authMiddleware(req, res, next) {
   token = req.headers["x-access-token"];
 
   if (token) {
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+        console.log(err);
         return res
           .status(401)
           .json({ message: "Failed to authenticate", isLoggedIn: false });

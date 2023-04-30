@@ -12,16 +12,23 @@ function Protected() {
     for (const cookie of cookies) {
       const [name, value] = cookie.split("=");
       if (name === "token") {
+        hasCookie = true;
         fetch("http://127.0.0.1:4997/protected", {
           headers: {
             "x-access-token": value,
           },
         })
-          .then((res) => res.json())
-          .then((data) =>
-            data.isLoggedIn ? setUserName(data.username) : navigate("/login")
-          );
-        hasCookie = true;
+          .then((res) => {
+            if (res.status === 200) {
+              res.json().then((data) => setUserName(data.username));
+            } else if (res.status === 401) {
+              navigate("/login");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            navigate("/login");
+          });
         break;
       }
     }
