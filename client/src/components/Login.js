@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function Login() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ function Login() {
 
   return (
     <div>
+      <Navbar />
       <h1>Login</h1>
       <form onSubmit={(event) => handleLogin(event)}>
         <label htmlFor="username">Username:</label>

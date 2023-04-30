@@ -6,6 +6,11 @@ function Protected() {
 
   const [username, setUserName] = useState(null);
 
+  function logout() {
+    document.cookie = "token" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    navigate("/login");
+  }
+
   useEffect(() => {
     let hasCookie = false;
     const cookies = document.cookie.split("; ");
@@ -40,6 +45,7 @@ function Protected() {
 
   return (
     <div>
+      <button onClick={logout}>Logout</button>
       <h1>Protected route</h1>
       {username && <p>Hello {username}</p>}
     </div>

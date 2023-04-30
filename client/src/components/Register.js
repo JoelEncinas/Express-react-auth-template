@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function Register() {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ function Register() {
 
   return (
     <div>
+      <Navbar />
       <h1>Register</h1>
       <form onSubmit={(event) => handleSubmit(event)}>
         <label htmlFor="username">Username:</label>
