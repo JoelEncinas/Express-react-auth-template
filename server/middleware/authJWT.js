@@ -1,19 +1,22 @@
 const jwt = require("jsonwebtoken");
 
 function authMiddleware(req, res, next) {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
+  token = req.headers("x-access-token");
+
+  if (token) {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res
+          .status(401)
+          .json({ message: "Failed to authenticate", isLoggedIn: false });
+      }
+
+      req.user = decoded;
+      next();
+    });
+  } else {
+    res.status(404).json({ message: "Incorrect token", isLoggedIn: false });
   }
-
-  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    req.user = decoded;
-    next();
-  });
 }
 
 module.exports = authMiddleware;
