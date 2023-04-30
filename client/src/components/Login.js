@@ -1,17 +1,20 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
 
     const form = e.target;
     const user = {
-      username: form[0].value,
-      password: form[1].value,
+      username: username,
+      password: password,
     };
 
     fetch("http://127.0.0.1:4997/auth/login", {
@@ -25,10 +28,10 @@ function Login() {
         if (res.status === 200) {
           res.json().then((data) => {
             console.log("logged in");
-            console.log(data);
             document.cookie = `token=${data.token}; expires=${new Date(
               Date.now() + 86400000
             )}; path=/`;
+            navigate("/protected");
           });
         } else if (res.status === 401) {
           console.log("invalid credentials");
@@ -48,9 +51,21 @@ function Login() {
       <h1>Login</h1>
       <form onSubmit={(event) => handleLogin(event)}>
         <label htmlFor="username">Username:</label>
-        <input required type="text" id="username"></input>
+        <input
+          required
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          id="username"
+        ></input>
         <label htmlFor="password">Password:</label>
-        <input required type="password" id="password"></input>
+        <input
+          required
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          id="password"
+        ></input>
         <input type="submit" value="Submit"></input>
       </form>
     </div>
