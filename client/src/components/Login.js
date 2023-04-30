@@ -36,7 +36,7 @@ function Login() {
           console.log("invalid credentials");
         } else if (res.status === 404) {
           console.log("user not found");
-        } else {
+        } else if (res.status === 500) {
           console.log("server err");
         }
       })
@@ -82,7 +82,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           id="password"
         ></input>
-        <input type="submit" value="Submit"></input>
+        <input type="submit" value="Login"></input>
       </form>
     </div>
   );
