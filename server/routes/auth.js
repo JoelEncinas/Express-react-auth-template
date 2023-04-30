@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ username });
     if (!user) {
-      res.status(200).json({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -40,13 +40,14 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: "24h",
       });
-      res.cookie("token", token);
-      return res.status(200).json({ message: "Log in successful" });
+      return res
+        .status(200)
+        .json({ message: "Log in successful", token: token });
     } else {
-      return res.status(200).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500);
   }
 });
 
