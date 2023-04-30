@@ -11,7 +11,6 @@ function Login() {
   function handleLogin(e) {
     e.preventDefault();
 
-    const form = e.target;
     const user = {
       username: username,
       password: password,
@@ -45,6 +44,17 @@ function Login() {
         console.log(error);
       });
   }
+
+  useEffect(() => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [name, value] = cookie.split("=");
+      if (name === "token") {
+        console.log(value);
+        break;
+      }
+    }
+  }, []);
 
   return (
     <div>
